@@ -37,14 +37,7 @@
   },
   "dependencies": {
     "bootstrap": "^5.3.0-alpha3",
-    "cron": "^2.3.0",
-    "csv": "^6.2.10",
-    "csv-parse": "^5.3.9",
-    "csv-write-stream": "^2.0.0",
     "electron-reload": "^2.0.0-alpha.1",
-    "electron-squirrel-startup": "^1.0.0",
-    "jquery": "^3.6.4",
-    "jquery-csv": "^1.0.21",
-    "mongodb": "^5.4.0"
+    "electron-squirrel-startup": "^1.0.0"
   }
 }

@@ -324,12 +324,11 @@ class BMSUnit():
         return self.unitType[0].value
     def get_active_alarms(self):
         activeAlarmList = []
-
-
-        
+     
         
         if len(self.activeFaults) == 0:
-            activeAlarmList = [['No active alarms','']]
+            # activeAlarmList = [['No active alarms','']]
+            activeAlarmList = []
         else:
             
             for alarm in self.activeFaults:

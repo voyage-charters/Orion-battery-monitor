@@ -7,6 +7,11 @@ let gotConnectingCallback;
 let gotTileInfoCallback;
 let gotSummaryInfoCallback;
 let gotTestCallback;
+let gotActiveAlarmsCallback;
+let gotDetailsCallback;
+let gotIOCallback;
+let gotCellInfoCallback;
+let gotAlarmHistoryCallback;
 
 
 let gotTest = (callback) => {
@@ -29,6 +34,124 @@ let gotSummaryInfo = (callback) => {
   gotSummaryInfoCallback = callback;
 }
 
+let gotActiveAlarms = (callback) => {
+  console.log("gotActiveAlarms");
+  gotActiveAlarmsCallback = callback;
+}
+
+let gotDetails = (callback) => {
+  console.log("gotDetails");
+  gotDetailsCallback = callback;
+}
+
+let gotIO = (callback) => {
+  console.log("gotIO");
+  gotIOCallback = callback;
+}
+
+let gotCellInfo = (callback) => {
+  console.log("gotCellInfo");
+  gotCellInfoCallback = callback;
+}
+
+let gotAlarmHistory = (callback) => {
+  console.log("gotAlarmHistory");
+  gotAlarmHistoryCallback = callback;
+}
+
+let getAlarmHistory = (BMSNumber) => {
+  // console.log("getAlarmHistory");
+  fetch(`http://127.0.0.1:5001/get_alarm_history/${BMSNumber}`).then((data)=>{
+          return data.text();
+      }
+      ).then((text)=>{
+        // console.log("data: ", text);
+        var alarms = JSON.parse(text);
+        // console.log("Cell Information: ", cellInfo.cell_info);
+        gotAlarmHistoryCallback(alarms);
+      }
+      ).catch(e=>{
+        console.log(e);
+        gotConnectingCallback("Connecting...");
+      }
+      )
+    
+}
+
+let getCellInfo = (BMSNumber) => {
+  // console.log("getCellInfo");
+  fetch(`http://127.0.0.1:5001/get_cell_info/${BMSNumber}`).then((data)=>{
+          return data.text();
+      }
+      ).then((text)=>{
+        // console.log("data: ", text);
+        var cellInfo = JSON.parse(text);
+        // console.log("Cell Information: ", cellInfo.cell_info);
+        gotCellInfoCallback(cellInfo.cell_info);
+      }
+      ).catch(e=>{
+        console.log(e);
+        gotConnectingCallback("Connecting...");
+      }
+      )
+    
+}
+
+let getIO = (BMSNumber) => {
+  console.log("getIO");
+  fetch(`http://127.0.0.1:5001/get_io/${BMSNumber}`).then((data)=>{
+          return data.text();
+      }
+      ).then((text)=>{
+        console.log("data: ", text);
+        var io = JSON.parse(text);
+        console.log("io: ", io.isFault);
+        gotIOCallback(io);
+      }
+      ).catch(e=>{
+        console.log(e);
+        gotConnectingCallback("Connecting...");
+      }
+      )
+    
+}
+
+let getDetails = (BMSNumber) => {
+  console.log("getDetails");
+  fetch(`http://127.0.0.1:5001/get_details/${BMSNumber}`).then((data)=>{
+          return data.text();
+      }
+      ).then((text)=>{
+        console.log("data: ", text);
+        var details = JSON.parse(text);
+        gotDetailsCallback(details);
+      }
+      ).catch(e=>{
+        console.log(e);
+        gotConnectingCallback("Connecting...");
+      }
+      )
+    
+}
+
+let getActiveAlarms = (BMSNumber) => {
+  console.log("getActiveAlarms");
+  fetch(`http://127.0.0.1:5001/get_active_alarms/${BMSNumber}`).then((data)=>{
+          return data.text();
+      }
+      ).then((text)=>{
+        console.log("data: ", text);
+        var alarms = JSON.parse(text);
+        gotActiveAlarmsCallback(alarms);
+      }
+      ).catch(e=>{
+        console.log(e);
+        gotConnectingCallback("Connecting...");
+      }
+      )
+    
+}
+
 
 
 let getSummaryInfo = (BMSNumber) => {
@@ -43,6 +166,7 @@ let getSummaryInfo = (BMSNumber) => {
       }
       ).catch(e=>{
         console.log(e);
+        gotConnectingCallback("Connecting...");
       }
       )
     }
@@ -90,6 +214,16 @@ let pingPython = () => {
     gotConnecting,
     getSummaryInfo,
     gotSummaryInfo,
+    getActiveAlarms,
+    gotActiveAlarms,
+    gotDetails,
+    getDetails,
+    getIO,
+    gotIO,
+    getCellInfo,
+    gotCellInfo,
+    getAlarmHistory,
+    gotAlarmHistory
     
   })
 

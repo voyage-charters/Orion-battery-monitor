@@ -145,31 +145,16 @@ hr {
  .info-row{
    width: 95%;
    color: white;
-   height: 50px;
+   /* height: 50px; */
    background-color: rgb(18,26,39);
    margin-left:10px ;
    margin-top: 2px;
    padding-top: 3px;
+   padding-bottom: 3px;
    /* margin-right: auto; */
  }
 
-.info_row{
-   width: 100%;
-   height: 50px;
-   color: white;
 
-   padding-left: 20px;
-   padding-right: 20px;
-   padding-top: 2px;
-   padding-bottom: 2px;
-   /* border-radius: 5px; */
-   /* border: 1px black solid; */
-   /* margin: 2px 2px; */
-   /* margin-top: 20px; */
-   background-color: rgb(18,26,39);
-   
-
-}
 .info_row, div {
    padding: 0;
 }
@@ -179,19 +164,30 @@ hr {
    max-width:800px ;
 }
 
-.info_name{
-   line-height: 44px;
-}
+/* .info_name{
+   margin-top: 5px;
+   margin-bottom: 5px;
+} */
 
 .info-value {
-   height: 44px;
+   height: 40px;
    background: #ffffff10;
    border-radius: 5px;
    margin-right: 2px;
    color: white;
    text-align: center;
    max-width: 50px;
-   margin-top: 2px;
+   /* margin-top: 5px;
+   margin-bottom: 2px; */
    
    
+}
+
+.cell-table {
+   margin-top: 10px;
+}
+
+.cell-table td, tr {
+   color:white;
+   text-align: center;
 }

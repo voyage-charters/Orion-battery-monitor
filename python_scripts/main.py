@@ -11,6 +11,18 @@ from CANManager import BMSUnit
 CM = ManageCan()
 IS_WINDOWS = platform.system() == 'Windows'
 
+def getBMS(BMSNumber):
+    if BMSNumber == "0":
+        BMS = CM.MM.BMS_Master_Combined
+    elif BMSNumber == "1":
+        BMS = CM.MM.BMS_Master
+    elif BMSNumber == "2":
+        BMS = CM.MM.BMS_Slave1
+    elif BMSNumber == "3":
+        BMS = CM.MM.BMS_Slave2
+    else:
+        BMS = CM.MM.BMS_Master_Combined
+    return BMS
 
 def ping():
 	return  "pong"
@@ -26,18 +38,18 @@ def pingPython():
 def get_current_user():
     BMSList = [CM.MM.BMS_Master_Combined ,CM.MM.BMS_Master, CM.MM.BMS_Slave1, CM.MM.BMS_Slave2]
     retobj = {}
-    for selBMS in BMSList:
-        BMSName=selBMS.BMSName
+    for BMS in BMSList:
+        BMSName=BMS.BMSName
         retobj[BMSName] = {
-            "BMSName":selBMS.BMSName,
-            "instantVoltage":selBMS.instantVoltage,
-            "packSOC":selBMS.packSOC,
-            "isFault" : selBMS.isFault,
-            "isOnline" : selBMS.isOnline,
-            "packCurrent" : selBMS.packCurrent,
-            "power" : selBMS.instantVoltage*selBMS.packCurrent,
-            "relayState" : selBMS.relayState,
-            "BMSNumber" : selBMS.get_unit_number(),
+            "BMSName":BMS.BMSName,
+            "instantVoltage":"%0.1f" % (BMS.instantVoltage,),
+            "packSOC":"%0.0f" % (BMS.packSOC,),
+            "isFault" : BMS.isFault,
+            "isOnline" : BMS.isOnline,
+            "packCurrent" : "%0.1f" % (BMS.packCurrent,),
+            "power" : "%0.0f" % (BMS.instantVoltage*BMS.packCurrent,),
+            "relayState" : BMS.relayState,
+            "BMSNumber" : BMS.get_unit_number(),
         }     
     print(retobj)  
     return jsonify(retobj)
@@ -46,37 +58,90 @@ def get_current_user():
 @app.route('/get_battery_summary/<BMSNumber>')
 def get_battery_summary(BMSNumber):
     print("BMSNumber",BMSNumber)
-    if BMSNumber == "0":
-        BMS = CM.MM.BMS_Master_Combined
-    elif BMSNumber == "1":
-        BMS = CM.MM.BMS_Master
-    elif BMSNumber == "2":
-        BMS = CM.MM.BMS_Slave1
-    elif BMSNumber == "3":
-        BMS = CM.MM.BMS_Slave2
-    else:
-        BMS = CM.MM.BMS_Master_Combined
+    BMS = getBMS(BMSNumber)
     
     retobj = {
         "BMSName":BMS.BMSName,
-        "instantVoltage":BMS.instantVoltage,
-        "packSOC":BMS.packSOC,
+        "instantVoltage": "%0.1f" % (BMS.instantVoltage,),
+        "packSOC": "%0.0f" % (BMS.packSOC,),
         "isFault" : BMS.isFault,
         "isOnline" : BMS.isOnline,
-        "packCurrent" : BMS.packCurrent,
-        "power" : BMS.instantVoltage*BMS.packCurrent,
+        "packCurrent" : "%0.1f" % (BMS.packCurrent,),
+        "power" : "%0.0f" % (BMS.instantVoltage*BMS.packCurrent,),
         "relayState" : BMS.relayState,
         "BMSNumber" : BMS.get_unit_number(),
+        "highCellVoltage" : "%0.2f" % (BMS.highCellVoltage,),
+        "lowCellVoltage" : "%0.2f" % (BMS.lowCellVoltage,),
+        "activeAlarms" : BMS.get_active_alarms(),
+
+
     }
     # print(retobj)
     return jsonify(retobj)
 
-
+# get active alarms with BMSNumber as an input
+@app.route('/get_active_alarms/<BMSNumber>')
+def get_active_alarms(BMSNumber):
+    BMS = getBMS(BMSNumber)
+    retobj = {
+        "activeAlarms" : BMS.get_active_alarms(),
+    }
+    return jsonify(retobj)
           
-     
+# get details with BMSNumber as an input
+@app.route('/get_details/<BMSNumber>')
+def get_details(BMSNumber):
+    BMS = getBMS(BMSNumber)
+    retobj = {
+        "BMSName":BMS.BMSName,
+        "highCellVoltage" : "%0.2f" % (BMS.highCellVoltage,),
+        "lowCellVoltage" : "%0.2f" % (BMS.lowCellVoltage,),
+        "highCellId" : BMS.highCellId,
+        "lowCellId" : BMS.lowCellId,
+        "highTemp" : "%0.2f" % (BMS.highTemp,),
+        "lowTemp" : "%0.2f" % (BMS.lowTemp,),
+        "heatSinkTemp" : "%0.2f" % (BMS.heatSinkTemp,),
+        "packDCL" : "%0.2f" % (BMS.packDCL,),
+        "packCCL" : "%0.2f" % (BMS.packCCL,),
 
 
-   
+    }
+    return jsonify(retobj)
+
+
+# get IO with BMSNumber as an input
+@app.route('/get_io/<BMSNumber>')
+def get_io(BMSNumber):
+    BMS = getBMS(BMSNumber)
+    retobj = {
+        "isFault" : BMS.isFault,
+        "isOnline" : BMS.isOnline,
+        "relayState" : BMS.relayState,
+        "isCharging" : BMS.chargeSafety,
+        "isBalancing" : BMS.isBalancing,
+        "allowDischarge" : BMS.allowDischarge,
+        "allowCharge" : BMS.allowCharge,
+    }
+    return jsonify(retobj)
+
+# get cell information with BMSNumber as an input
+@app.route('/get_cell_info/<BMSNumber>')
+def get_cell_info(BMSNumber):
+    BMS = getBMS(BMSNumber)
+    retobj = {
+        "cell_info": BMS.cell_info,
+    }
+    print(retobj)
+    return jsonify(retobj)
+
+#get alarms history with BMSNumber as an input
+@app.route('/get_alarm_history/<BMSNumber>')
+def get_alarms_history(BMSNumber):
+    BMS = getBMS(BMSNumber)
+    retobj = {
+        "alarmHistory": BMS.get_alarm_history(),
+    }
+    return jsonify(retobj)
 
 if __name__ == "__main__":
     app.run(host='127.0.0.1', port=5001)
