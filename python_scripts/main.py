@@ -136,7 +136,7 @@ def get_cell_info(BMSNumber):
 
 #get alarms history with BMSNumber as an input
 @app.route('/get_alarm_history/<BMSNumber>')
-def get_alarms_history(BMSNumber):
+def get_alarm_history(BMSNumber):
     BMS = getBMS(BMSNumber)
     retobj = {
         "alarmHistory": BMS.get_alarm_history(),

@@ -30,7 +30,7 @@ window.addEventListener("load", () => {
     window.electronAPI.gotCellInfo(gotCellInfo);
     // Got alarm history
     window.electronAPI.gotAlarmHistory(gotAlarmHistory);
-    
+
 
 
     
@@ -62,6 +62,16 @@ var pageRefresh = setInterval(function() {
 function testfunction(){
     console.log("test function");
 }
+
+const gotAlarmHistory = (alarmHistory) => {
+    console.log("gotAlarmHistory");
+    console.log(alarmHistory);
+    addHeader("Alarm History");
+    // add alarm history info
+    // console.log(`Alarm History: ${alarmHistory}`);
+    let tableString = "";
+}
+
 
 const gotCellInfo = (cellInfo) => {
     let cellsPerRow = 11;
@@ -359,6 +369,7 @@ function manageInfo(){
     }
     else if (pageIndex[0] == pageIndexes.alarmHistory){
         console.log("alarmHistory page");
+        window.electronAPI.getAlarmHistory(BMSID);
     }
     else if (pageIndex[0] == pageIndexes.IO){
         console.log("IO page");
