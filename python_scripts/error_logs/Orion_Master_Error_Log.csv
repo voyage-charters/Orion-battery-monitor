@@ -1,1 +1,20 @@
 DateTime,Log Description,Action
+2023-09-28 10:10:17,DTC P0AFA : Low Cell Voltage,Raised
+2023-09-28 10:10:17,DTC P0AC0 : Current Sensor,Raised
+2023-09-28 10:10:17,DTC P0A9C : Thermistor,Raised
+2023-09-28 10:11:46,DTC P0AFA : Low Cell Voltage,Raised
+2023-09-28 10:11:46,DTC P0AC0 : Current Sensor,Raised
+2023-09-28 10:11:46,DTC P0A9C : Thermistor,Raised
+2023-09-28 10:26:41,DTC P0AFA : Low Cell Voltage,Raised
+2023-09-28 10:26:41,DTC P0AC0 : Current Sensor,Raised
+2023-09-28 10:26:41,DTC P0A9C : Thermistor,Raised
+2023-09-28 10:30:36,DTC P0AFA : Low Cell Voltage,Raised
+2023-09-28 10:30:36,DTC P0AC0 : Current Sensor,Raised
+2023-09-28 10:30:36,DTC P0A9C : Thermistor,Raised
+2023-09-28 10:41:00,DTC P0AFA : Low Cell Voltage,Raised
+2023-09-28 10:41:00,DTC P0AC0 : Current Sensor,Raised
+2023-09-28 10:41:00,DTC P0A9C : Thermistor,Raised
+2023-10-13 11:35:24,DTC P0A08 : Charger Safety Relay,Raised
+2023-10-13 11:44:31,DTC P0A08 : Charger Safety Relay,Raised
+2023-10-13 11:44:34.956785,BMS Reset by operator,N/A
+2023-10-13 11:44:35,DTC P0A08 : Charger Safety Relay,Cleared

@@ -117,8 +117,14 @@ class ManageCan():
             self.m_objPCANBasic.Uninitialize(PCAN_NONEBUS)
 
     def ReadCAN(self):
+        # Check online status of all BMSs
+        self.MM.BMS_Master_Combined.checkOnline()
+        self.MM.BMS_Master.checkOnline()
+        self.MM.BMS_Slave1.checkOnline()
+        self.MM.BMS_Slave2.checkOnline()
         if IS_WINDOWS:
             #Read CANBus using PEAKCAN USB 
+            # print("reading CANBus")
             self.ReadMessages()
         else:
             #Read CANBus using RS485 CAN HAT

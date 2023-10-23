@@ -213,7 +213,7 @@ class BMSUnit():
  
         
         self.lastOnline = timeStamp
-        self.checkOnline()
+        # self.checkOnline()
         if name == 'Pack_Current':
             if (value == -600) and (self.isFault):
                 self.packCurrent = 0

@@ -34,6 +34,37 @@ app = Flask(__name__)
 def pingPython():    
     return ping()
 
+# Return CANBus connection status 
+@app.route("/get_canBus_status")
+def get_canBus_status():
+    retobj = {
+        "isConnected": CM.isConnected,
+        "isWindows": IS_WINDOWS,
+    }
+    return jsonify(retobj)
+
+# Start CANBus connection
+@app.route("/start_canBus")
+def start_canBus():
+    print("Starting CANBus")
+    CM.startCANDevice()
+    retobj = {
+        "isConnected": CM.isConnected,
+        "isWindows": IS_WINDOWS,
+    }
+    return jsonify(retobj)
+
+#start CANBus Read
+@app.route("/start_canBus_read")
+def start_canBus_read():
+    print("Starting CANBus Read")
+    CM.startCANBusRead()
+    retobj = {
+        "isRunning": CM.isRunning,
+    }
+    return jsonify(retobj)
+
+
 @app.route('/get_tile_info/')
 def get_current_user():
     BMSList = [CM.MM.BMS_Master_Combined ,CM.MM.BMS_Master, CM.MM.BMS_Slave1, CM.MM.BMS_Slave2]
@@ -51,7 +82,7 @@ def get_current_user():
             "relayState" : BMS.relayState,
             "BMSNumber" : BMS.get_unit_number(),
         }     
-    print(retobj)  
+    # print(retobj)  
     return jsonify(retobj)
 
 # get battery summary with BMSNumber as an input
@@ -131,7 +162,7 @@ def get_cell_info(BMSNumber):
     retobj = {
         "cell_info": BMS.cell_info,
     }
-    print(retobj)
+    # print(retobj)
     return jsonify(retobj)
 
 #get alarms history with BMSNumber as an input
@@ -140,6 +171,15 @@ def get_alarm_history(BMSNumber):
     BMS = getBMS(BMSNumber)
     retobj = {
         "alarmHistory": BMS.get_alarm_history(),
+    }
+    return jsonify(retobj)
+
+#Reset all BMSs
+@app.route('/reset_bms')
+def send_reset_bms():
+    CM.BMSResetAll()
+    retobj = {
+        "resetBMS": "OK",
     }
     return jsonify(retobj)
 

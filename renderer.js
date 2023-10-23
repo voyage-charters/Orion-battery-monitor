@@ -3,6 +3,10 @@
 const dayOfTheWeek = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 const monthShort = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul","Aug", "Sep", "Oct", "Nov", "Dec"];
 let BMSID = 0;
+let isCanDeviceAvailable = false;
+let isCanBusStarted = false;
+let isWindows = false;
+
 const pageIndexes  = {
     Home: 'Home',
     Summary : 'Summary',
@@ -30,13 +34,22 @@ window.addEventListener("load", () => {
     window.electronAPI.gotCellInfo(gotCellInfo);
     // Got alarm history
     window.electronAPI.gotAlarmHistory(gotAlarmHistory);
+    // Got start canBus
+    window.electronAPI.gotStartCanBus(gotStartCanBus);
+    // Got start canRead
+    window.electronAPI.gotStartCanRead(gotStartCanRead);
+
+
 
 
 
     
 
     // Initial call to get tile info
-    window.electronAPI.getTileInfo();
+    // window.electronAPI.getTileInfo();
+
+    // Start the CanBus
+    window.electronAPI.startCanBus();
 
     // getBatteryTile(batteryMaster);
     // getBatteryTile(batterySlave);
@@ -49,18 +62,47 @@ const mainInfo = document.getElementById("main-info");
 
 
 var pageRefresh = setInterval(function() {
+
+    if (isCanDeviceAvailable){
+        // console.log("getting tile info");
+        if (isCanBusStarted){
+            manageInfo();
+        }
+        else {
+            window.electronAPI.startCanRead();
+        }
+        
+    }
+
+
     // window.electronAPI.getTileInfo();
     // Run manage info periodically
-    manageInfo();
+    
 
    
 
-  }, 20000);
+  }, 1000);
 
 
+function resetAllBMS(){
+    window.electronAPI.sendResetCommand();
+}
 
 function testfunction(){
     console.log("test function");
+}
+
+const gotStartCanBus = (canBus) => {
+    console.log("gotStartCanBus");
+    console.log(canBus);
+    isCanDeviceAvailable = canBus.isConnected    ;
+    isWindows = canBus.isWindows;
+}
+
+const gotStartCanRead = (canBus) => {
+    console.log("gotStartCanBus");
+    console.log(canBus);
+    isCanBusStarted = canBus.isRunning;
 }
 
 const gotAlarmHistory = (alarmHistory) => {
@@ -226,6 +268,11 @@ const gotActiveAlarms = (alarms) => {
     console.log(` list of active alarms ${alarms.activeAlarms}`);
     addHeader("Active Alarms");
     // add alarm info
+    // loop through alarms
+    for (const alarm in alarms.activeAlarms){
+        // console.log(`alarm: ${alarms.activeAlarms[alarm]}`);
+        mainInfo.innerHTML += getInfoRow(`${alarms.activeAlarms[alarm]}`, [">"], null, "red");
+    }
     
 }
 
@@ -343,7 +390,7 @@ const gotTileInfo = (batteries) => {
         }
     //add a button to end of mainInfo
     mainInfo.innerHTML += `
-        <button type="button" id="" class="btn btn-warning" onclick="testfunction()" style="width:100px">Reset</button>
+        <button type="button" id="" class="btn btn-warning" onclick="resetAllBMS()" style="width:100px">Reset</button>
     `;
 
 }
