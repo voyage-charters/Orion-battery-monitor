@@ -91,7 +91,7 @@ class ManageCan():
             print("Connection successful. You can Read some CANBus data now")
         else:
             print("Starting SocketCan device")
-            os.system('sudo ip link set can0 type can bitrate 500000')
+            os.system('sudo ip link set can0 type can bitrate 500000 dbitrate 8000000 restart-ms 1000 berr-reporting on')
             os.system('sudo ifconfig can0 up')
             self.bus = can.interface.Bus(channel = 'can0', bustype = 'socketcan')
             self.isConnected = True
