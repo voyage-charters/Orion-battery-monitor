@@ -1,8 +1,5 @@
-flask
-flask_cors
-python3-pip
-python3-pil
-python3-numpy
+flask==2.3.2
+flask_cors==3.0.10
 RPi.GPIO
 spidev
 python-can

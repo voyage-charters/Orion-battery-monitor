@@ -249,9 +249,9 @@ class ManageCan():
         for i in range(8):
             msgCanMessage.DATA[i] = DATA[i]
         
-
-        stsResult = self.m_objPCANBasic.Write(self.PcanHandle, msgCanMessage)
         print("trying to send message")
+        stsResult = self.m_objPCANBasic.Write(self.PcanHandle, msgCanMessage)
+        
         if (stsResult != PCAN_ERROR_OK):
             self.ShowStatus(stsResult)
         else:

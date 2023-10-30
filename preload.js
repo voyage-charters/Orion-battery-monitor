@@ -102,7 +102,7 @@ let getIO = (BMSNumber) => {
     return data.text();
   }
   ).then((text) => {
-    console.log("data: ", text);
+    // console.log("data: ", text);
     var io = JSON.parse(text);
     console.log("io: ", io.isFault);
     gotIOCallback(io);
@@ -129,7 +129,7 @@ let getDetails = (BMSNumber) => {
     return data.text();
   }
   ).then((text) => {
-    console.log("data: ", text);
+    // console.log("data: ", text);
     var details = JSON.parse(text);
     gotDetailsCallback(details);
   }
@@ -155,7 +155,7 @@ let getActiveAlarms = (BMSNumber) => {
     return data.text();
   }
   ).then((text) => {
-    console.log("data: ", text);
+    // console.log("data: ", text);
     var alarms = JSON.parse(text);
     gotActiveAlarmsCallback(alarms);
   }
@@ -183,7 +183,7 @@ let getSummaryInfo = (BMSNumber) => {
     return data.text();
   }
   ).then((text) => {
-    console.log("data: ", text);
+    // console.log("data: ", text);
     var summary = JSON.parse(text);
     gotSummaryInfoCallback(summary);
   }

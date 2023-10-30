@@ -177,6 +177,8 @@ def get_alarm_history(BMSNumber):
 #Reset all BMSs
 @app.route('/reset_bms')
 def send_reset_bms():
+    # log reset
+    print("Resetting BMSs")
     CM.BMSResetAll()
     retobj = {
         "resetBMS": "OK",
