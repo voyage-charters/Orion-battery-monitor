@@ -18,3 +18,8 @@ DateTime,Log Description,Action
 2023-10-13 11:44:31,DTC P0A08 : Charger Safety Relay,Raised
 2023-10-13 11:44:34.956785,BMS Reset by operator,N/A
 2023-10-13 11:44:35,DTC P0A08 : Charger Safety Relay,Cleared
+2023-10-30 12:54:05,DTC P0AFA : Low Cell Voltage,Raised
+2023-10-30 12:54:05,DTC P0AC0 : Current Sensor,Raised
+2023-10-30 12:54:05,DTC P0A9C : Thermistor,Raised
+2023-10-30 12:56:43,DTC P0AC0 : Current Sensor,Cleared
+2023-10-30 12:56:43,DTC P0AC0 : Current Sensor,Raised
