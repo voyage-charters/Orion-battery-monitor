@@ -3,6 +3,7 @@
 const dayOfTheWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const monthShort = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 let BMSID = 0;
+let isPythonRunning = false;
 let isCanDeviceAvailable = false;
 let isCanBusStarted = false;
 let isWindows = false;
@@ -22,6 +23,9 @@ let pageIndex = [pageIndexes.Home];
 
 window.addEventListener("load", () => {
     //callbacks
+    // Got Ping
+    window.electronAPI.gotPingPython(gotPingPython);
+    // Got tile info
     window.electronAPI.gotTileInfo(gotTileInfo);
     window.electronAPI.gotTest(gotTest);
     window.electronAPI.gotSummaryInfo(gotSummaryInfo);
@@ -40,6 +44,8 @@ window.addEventListener("load", () => {
     // Got start canRead
     window.electronAPI.gotStartCanRead(gotStartCanRead);
 
+    // window.electronAPI.startPython();
+
 
 
 
@@ -50,7 +56,7 @@ window.addEventListener("load", () => {
     // window.electronAPI.getTileInfo();
 
     // Start the CanBus
-    window.electronAPI.startCanBus();
+    // window.electronAPI.startCanBus();
 
     // getBatteryTile(batteryMaster);
     // getBatteryTile(batterySlave);
@@ -64,23 +70,29 @@ const mainInfo = document.getElementById("main-info");
 
 var pageRefresh = setInterval(function () {
 
-    if (isCanDeviceAvailable) {
-        // console.log("getting tile info");
-        if (isCanBusStarted) {
-            manageInfo();
-        }
-        else {
-            window.electronAPI.startCanRead();
-        }
+    // ping python script
+    window.electronAPI.pingPython();
 
+    if (isPythonRunning) {
+        console.log("python is running");
+        if (isCanDeviceAvailable) {
+            // console.log("getting tile info");
+            if (isCanBusStarted) {
+                manageInfo();
+            }
+            else {
+                window.electronAPI.startCanRead();
+            }
+        }else{
+            window.electronAPI.startCanBus();
+        }
     }
+
+
 
 
     // window.electronAPI.getTileInfo();
     // Run manage info periodically
-
-
-
 
 }, 1000);
 
@@ -92,6 +104,20 @@ function resetAllBMS() {
 function testfunction() {
     console.log("test function");
 }
+
+const gotPingPython = (ping) => {
+    // console.log("gotPing");
+    // console.log(ping);
+    if (ping == "pong") {
+        isPythonRunning = true;
+    }else{
+        console.log("python not running");
+        isPythonRunning = false;
+        isCanDeviceAvailable = false;
+        isCanBusStarted = false;
+    }
+}
+
 
 const gotStartCanBus = (canBus) => {
     // console.log("gotStartCanBus");

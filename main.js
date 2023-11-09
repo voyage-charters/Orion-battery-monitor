@@ -4,6 +4,8 @@ const {app, BrowserWindow, ipcMain} = require('electron');
 const electronReload = require('electron-reload');
 const path = require('path');
 const globals = require('./globals')
+const { spawn } = require("child_process");
+var pyshell =  require('python-shell');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -22,8 +24,17 @@ function handleSetTitle (event, title) {
   
   // win.setTitle(title);
 }
+function runPythonScript (){
+  console.log("runPythonScript");
+  let python = spawn('python', [path.join(app.getAppPath(), '..', 'python_scripts/main.py')])
+  // let py = spawn('python', ['./python_scripts/main.py']);
+  // py.stdout.on('data', data => console.log('data : ', data.toString()))
+}
+
+
 
 function createWindow () {
+
   const mainWindow = new BrowserWindow({
     autoHideMenuBar: true,
     // frame: false,
@@ -40,13 +51,18 @@ function createWindow () {
   mainWindow.loadFile('index.html')
 }
 
+
+
 app.whenReady().then(() => {
-  ipcMain.on('set-title', handleSetTitle)
+  ipcMain.handle('set-title', handleSetTitle)
+  ipcMain.handle('start-python',runPythonScript)
   createWindow()
   app.on('activate', function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
 })
+
+
 
 
 // Quit when all windows are closed.

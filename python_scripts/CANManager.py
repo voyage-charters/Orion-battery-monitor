@@ -171,27 +171,23 @@ class ManageCan():
         
     def ReadMessage_RS485(self):
         message = self.bus.recv(0.2)
-        while True:
-            if message:
-                break
-            message = self.bus.recv(0.2)
+        if message:
+            try:
+                # if message.arbitration_id == 947:    
+                #     print(list(message.data))
 
-        try:
-            # if message.arbitration_id == 947:    
-            #     print(list(message.data))
-
-            messageData = list(message.data)
-            messageID = message.arbitration_id
-            message.arbitration_id,message.dlc,messageData,message.timestamp
-            itstimestamp = time.time()
-            #print(message)
-            self.MM.process_message(messageID,messageData,itstimestamp)
-            # messageString =  "{}:ID={}:LEN={}".format("RX", message.arbitration_id, message.dlc)
-            # for x in range(message.dlc):
-            #     messageString += ":{:02x}".format(message.data[x])        
-        #print exception if failed to parse the CAN message into the string.
-        except Exception as e:
-            print("Could not process RS485 CANBus message. Error : {}".format(e))
+                messageData = list(message.data)
+                messageID = message.arbitration_id
+                message.arbitration_id,message.dlc,messageData,message.timestamp
+                itstimestamp = time.time()
+                #print(message)
+                self.MM.process_message(messageID,messageData,itstimestamp)
+                # messageString =  "{}:ID={}:LEN={}".format("RX", message.arbitration_id, message.dlc)
+                # for x in range(message.dlc):
+                #     messageString += ":{:02x}".format(message.data[x])        
+            #print exception if failed to parse the CAN message into the string.
+            except Exception as e:
+                print("Could not process RS485 CANBus message. Error : {}".format(e))
             
 
         

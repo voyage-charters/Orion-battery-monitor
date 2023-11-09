@@ -234,16 +234,23 @@ let gotTileInfo = (callback) => {
 //ping python script
 let pingPython = () => {
   console.log("pingPython");
-  fetch(`http://127.0.0.1:5001/get_info/654321`).then((data) => {
+  fetch(`http://127.0.0.1:5001/ping`).then((data) => {
     return data.text();
   }).then((text) => {
-    console.log("data: ", text);
-    var info = JSON.parse(text);
-    console.log(`email : ${info.email} `)
+    // console.log("data: ", text);
+    // var info = JSON.parse(text);
+    // console.log(`email : ${info.email} `)
+    gotPingPythonCallback(text);
   }).catch(e => {
-    console.log(e);
+    gotPingPythonCallback("error");
+    return "error"
+    // console.log(e);
   })
 };
+let gotPingPython = (callback) => {
+  console.log("gotPingPython");
+  gotPingPythonCallback = callback;
+}
 
 // ##########################################################
 // ####################  Start CanBus Device#################
@@ -306,7 +313,9 @@ let sendResetCommand = () => {
 
 
 contextBridge.exposeInMainWorld('electronAPI', {
+  startPython: () => ipcRenderer.invoke('start-python'),
   pingPython,
+  gotPingPython,
   gotTest,
   getTileInfo,
   gotTileInfo,
