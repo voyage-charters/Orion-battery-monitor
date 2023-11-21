@@ -27,14 +27,17 @@ function handleSetTitle (event, title) {
 function runPythonScript (){
   console.log("runPythonScript");
   let python = spawn('python', [path.join(app.getAppPath(), '..', 'python_scripts/main.py')])
-  // let py = spawn('python', ['./python_scripts/main.py']);
-  // py.stdout.on('data', data => console.log('data : ', data.toString()))
 }
 function runRebootPiScript (){
   console.log("runRebootPiScript");
-  let python = spawn('python', [path.join(app.getAppPath(), '..', 'python_scripts/rebootPi.py')])
-  // let py = spawn('python', ['./python_scripts/main.py']);
-  // py.stdout.on('data', data => console.log('data : ', data.toString()))
+  let pythonReboot = spawn('python', [path.join(app.getAppPath(), '..', 'python_scripts/rebootPi.py')])
+  pythonProcess.stdout.on('data', (data) => {
+    console.log(`Python script output: ${data}`);
+  });
+  
+  pythonRebootb.stderr.on('data', (data) => {
+    console.error(`Error from Python script: ${data}`);
+  });
 }
 function runRebootWindowsScript (){
   console.log("runRebootWindowsScript");
