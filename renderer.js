@@ -76,6 +76,8 @@ var pageRefresh = setInterval(function () {
     // ping python script
     window.electronAPI.pingPython();
 
+
+
     if (isPythonRunning) {
         // console.log("python is running");
         if (isCanDeviceAvailable) {
@@ -84,12 +86,21 @@ var pageRefresh = setInterval(function () {
                 manageInfo();
             }
             else {
+                showConnectingPage("Reading Batteries...");
                 window.electronAPI.startCanRead();
             }
-        }else{
+        } else {
+            showConnectingPage("Starting Network...");
             window.electronAPI.startCanBus();
         }
     }
+    else {
+        showConnectingPage("Starting Scripts...");
+    }
+
+
+
+
 
 
 
@@ -113,7 +124,7 @@ const gotPingPython = (ping) => {
     // console.log(ping);
     if (ping == "pong") {
         isPythonRunning = true;
-    }else{
+    } else {
         console.log("python not running");
         isPythonRunning = false;
         isCanDeviceAvailable = false;
@@ -312,10 +323,13 @@ const gotTest = (test) => {
 
 const gotConnecting = (connecting) => {
     console.log("gotConnecting");
+    showConnectingPage("Conneting...");
+}
+function showConnectingPage(connectingMsg) {
     mainInfo.innerHTML = "";
     mainInfo.innerHTML = `
         <div class="row align-items-center" style="width:80%; text-align: center; margin-left:auto;margin-right:auto;margin-top:100px">
-            <h1>${connecting}</h1>
+            <h1>${connectingMsg}</h1>
             
         </div>
     `;
@@ -339,9 +353,9 @@ const gotSummaryInfo = (battery) => {
         mainInfo.innerHTML += getInfoRow("Battery Summary", [`${battery.instantVoltage} V`, `${battery.packCurrent} A`, batteryPowerStr]);
         mainInfo.innerHTML += getInfoRow("State Of Charge (SOC)", [`${battery.packSOC} %`]);
         mainInfo.innerHTML += getInfoRow("Details", [">"], pageIndexes.Details);
-        mainInfo.innerHTML += getInfoRow("Reset All BMS",[">"], pageIndexes.ResetBMSs, "white");
+        mainInfo.innerHTML += getInfoRow("Reset All BMS", [">"], pageIndexes.ResetBMSs, "white");
 
-        
+
     } else {
         mainInfo.innerHTML += getInfoRow("Status", [statusString], null, statusColor);
         var batteryPowerStr = getPowerString(battery.power);
@@ -438,6 +452,7 @@ function manageInfo() {
     // console.log("manage info");
     // console.log(`pageIndex: ${pageIndex}`);
     // console.log(`page index: ${pageIndex}`);
+
     if (pageIndex[0] == pageIndexes.Home) {
         // console.log("home page");
         // console.log("getting tile info");
@@ -474,6 +489,7 @@ function manageInfo() {
         // console.log("unknown page");
         pageIndex = [pageIndexes.Home];
     }
+
 
 
 }
@@ -513,7 +529,7 @@ function getPowerString(power) {
 function getBatteryTile(battery) {
     // const batteryPower = battery.voltage * battery.amps;
 
-    
+
     var batteryDraw;
     // var statusColor = "red";
     // let statusString = "OFFLINE";
@@ -521,7 +537,7 @@ function getBatteryTile(battery) {
     var batteryStatus = getStatusString(battery);
     var statusString = batteryStatus[0];
     var statusColor = batteryStatus[1];
-    
+
     //absolute value of batteryPower
     var batteryPowerStr = getPowerString(battery.power);
 
@@ -545,8 +561,8 @@ function getBatteryTile(battery) {
         // master BMS
         statusString = "";
         statusDesc = "";
-    } 
-    
+    }
+
 
     mainInfo.innerHTML += `
         <div class="battery-tile row rounded align-items-center border border-1 border-dark scan-tile mx-auto" onclick="loadBatterySummary(${battery.BMSNumber})">
@@ -607,7 +623,7 @@ btnReboot.addEventListener('click', () => {
     console.log("rebooting");
     if (!isWindows) {
         window.electronAPI.rebootPi();
-    }else{
+    } else {
         window.electronAPI.rebootWindows();
     }
 
