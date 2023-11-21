@@ -14,12 +14,14 @@
 
 body {
    display: flex;
-   align-items: center;
+   /* align-items: center; */
    justify-content: center;
    height: 100vh;
    width: 100vw;
    position: relative;
    background-color: #232b3a !important;
+   overflow-x: hidden;
+   
 
 }
 
@@ -33,7 +35,7 @@ hr {
 }
 
 .main-window {
-   height: 544px;
+   /* height: 600px; */
    width: 960px;
    overflow: auto;
    background-color: rgb(35, 43, 58);
@@ -42,8 +44,14 @@ hr {
    /* modern scroll bar */
    scrollbar-width: thin;
    scrollbar-color: #2f3a4c #1e242f;
+   margin-top: 20px;
 
 }
+.main-window,
+.sidebar {
+   height: 480px;
+}
+
 
 .main-content {
    padding: 5px;
@@ -63,10 +71,6 @@ hr {
 /* Title styling */
 
 
-.main-window,
-.sidebar {
-   height: 400px;
-}
 
 /* Side bar styling */
 .sidebar {

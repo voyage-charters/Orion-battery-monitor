@@ -68,6 +68,7 @@ window.addEventListener("load", () => {
 const btnshowSidebar = document.getElementById("openbtn");
 const btnHideSidebar = document.getElementById("closebtn");
 const btnReboot = document.getElementById("btn-reboot");
+const btnExit = document.getElementById("btn-exit");
 const mainInfo = document.getElementById("main-info");
 
 
@@ -627,6 +628,10 @@ btnReboot.addEventListener('click', () => {
         window.electronAPI.rebootWindows();
     }
 
+});
+btnExit.addEventListener('click', () => {
+    console.log("exiting");
+    window.electronAPI.exit();
 });
 
 

@@ -88,6 +88,7 @@ app.whenReady().then(() => {
   ipcMain.handle('start-python', runPythonScript)
   ipcMain.handle('reboot-pi', runRebootPiScript)
   ipcMain.handle('reboot-windows', runRebootWindowsScript)
+  ipcMain.handle('exit', () => {app.exit()})
   createWindow()
   app.on('activate', function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
