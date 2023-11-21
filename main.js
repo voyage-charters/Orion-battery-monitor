@@ -65,6 +65,7 @@ function createWindow() {
       preload: path.join(__dirname, 'preload.js'),
     }
   });
+  mainWindow.setKiosk(true); //important
   mainWindow.maximize();
   mainWindow.setBackgroundColor('#232b3a');
   mainWindow.loadFile('index.html');

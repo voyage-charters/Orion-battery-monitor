@@ -142,3 +142,17 @@ DateTime,Log Description,Action
 2023-11-21 13:06:39,DTC P0AFA : Low Cell Voltage,Raised
 2023-11-21 13:06:39,DTC P0AC0 : Current Sensor,Raised
 2023-11-21 13:06:39,DTC P0A9C : Thermistor,Raised
+2023-11-21 13:08:30,DTC P0AFA : Low Cell Voltage,Cleared
+2023-11-21 13:08:30,DTC P0AC0 : Current Sensor,Cleared
+2023-11-21 13:08:30,DTC P0A9C : Thermistor,Cleared
+2023-11-21 13:08:30,DTC P0AFA : Low Cell Voltage,Raised
+2023-11-21 13:08:30,DTC P0AC0 : Current Sensor,Raised
+2023-11-21 13:08:30,DTC P0A9C : Thermistor,Raised
+2023-11-21 13:08:31,DTC P0AFA : Low Cell Voltage,Cleared
+2023-11-21 13:08:31,DTC P0AC0 : Current Sensor,Cleared
+2023-11-21 13:08:31,DTC P0A9C : Thermistor,Cleared
+2023-11-21 13:08:31,DTC P0AFA : Low Cell Voltage,Raised
+2023-11-21 13:08:32,DTC P0AFA : Low Cell Voltage,Cleared
+2023-11-21 13:08:32,DTC P0AFA : Low Cell Voltage,Raised
+2023-11-21 13:08:32,DTC P0AC0 : Current Sensor,Raised
+2023-11-21 13:08:32,DTC P0A9C : Thermistor,Raised
