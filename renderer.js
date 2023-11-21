@@ -52,6 +52,8 @@ window.addEventListener("load", () => {
 
 
 
+
+
     // Initial call to get tile info
     // window.electronAPI.getTileInfo();
 
@@ -65,6 +67,7 @@ window.addEventListener("load", () => {
 
 const btnshowSidebar = document.getElementById("openbtn");
 const btnHideSidebar = document.getElementById("closebtn");
+const btnReboot = document.getElementById("btn-reboot");
 const mainInfo = document.getElementById("main-info");
 
 
@@ -600,6 +603,16 @@ btnHideSidebar.addEventListener('click', () => {
     document.getElementById("mySidebar").style.width = "0";
     // document.getElementById("content").style.marginLeft = "0";
 });
+btnReboot.addEventListener('click', () => {
+    console.log("rebooting");
+    if (!isWindows) {
+        window.electronAPI.rebootPi();
+    }else{
+        window.electronAPI.rebootWindows();
+    }
+
+});
+
 
 
 

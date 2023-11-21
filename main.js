@@ -30,6 +30,17 @@ function runPythonScript (){
   // let py = spawn('python', ['./python_scripts/main.py']);
   // py.stdout.on('data', data => console.log('data : ', data.toString()))
 }
+function runRebootPiScript (){
+  console.log("runRebootPiScript");
+  let python = spawn('python', [path.join(app.getAppPath(), '..', 'python_scripts/reboot_pi.py')])
+  // let py = spawn('python', ['./python_scripts/main.py']);
+  // py.stdout.on('data', data => console.log('data : ', data.toString()))
+}
+function runRebootWindowsScript (){
+  console.log("runRebootWindowsScript");
+  app.relaunch()
+  app.exit()
+}
 
 
 
@@ -66,6 +77,8 @@ function createWindow () {
 app.whenReady().then(() => {
   ipcMain.handle('set-title', handleSetTitle)
   ipcMain.handle('start-python',runPythonScript)
+  ipcMain.handle('reboot-pi',runRebootPiScript)
+  ipcMain.handle('reboot-windows',runRebootWindowsScript)
   createWindow()
   app.on('activate', function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()

@@ -336,6 +336,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
   startCanRead,
   gotStartCanRead,
   sendResetCommand,
+  rebootPi: () => ipcRenderer.invoke('reboot-pi'),
+  rebootWindows: () => ipcRenderer.invoke('reboot-windows'),
 
 
 })
