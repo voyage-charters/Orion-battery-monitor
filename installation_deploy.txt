@@ -1,0 +1,66 @@
+Install Rpi kiosk mode 
+    - Follow this tutorial
+        https://desertbot.io/blog/raspberry-pi-4-touchscreen-kiosk-setup
+    - Install Lite image
+    - Initiate headless setup
+        https://desertbot.io/blog/headless-raspberry-pi-4-ssh-wifi-setup
+    - Configure startup settings
+        sudo raspi-config
+        - Boot Options -> Desktop / CLI -> Console Autologin
+    - Reboot
+    - install minimum GUI components
+        sudo apt-get install --no-install-recommends xserver-xorg x11-xserver-utils xinit openbox
+    - install chromium
+        sudo apt-get install --no-install-recommends chromium-browser
+    - Edit openbox config
+        sudo nano /etc/xdg/openbox/autostart
+        - add following lines
+            xset s off
+            xset s noblank
+            xset -dpms
+            chromium-browser --noerrdialogs --disable-infobars --kiosk http://localhost:5000 --incognito --disable-translate
+    
+
+    
+Install WAVESHARE 5inch dsi capacitive touch display
+    https://www.waveshare.com/5inch-dsi-lcd.htm
+    https://www.waveshare.com/wiki/5inch_DSI_LCD
+        - copy following to /boot/config.txt
+        dtoverlay=vc4-kms-v3d
+        dtoverlay=vc4-kms-dsi-7inch
+
+Install WAVESHARE 2-CH_CAN_FD_HAT
+    https://www.waveshare.com/wiki/2-CH_CAN_FD_HAT
+    - Enable I2C
+      - sudo raspi-config 
+      - Choose Interfacing Options -> I2C -> Yes.
+
+    - Install bcm2835 drivers
+    - install wiringpy
+    - Run in dual SPI mode
+     copy following to /boot/config.txt
+        dtparam=spi=on
+        dtoverlay=spi1-3cs
+        dtoverlay=mcp251xfd,spi0-0,interrupt=25
+        dtoverlay=mcp251xfd,spi1-0,interrupt=24
+     ```
+
+Install Python3 packages
+    - Run with sudo to install for all users otherwise it wont work at startup
+    sudo pip3 install python-can --break-system-packages
+    sudo pip3 install flask --break-system-packages
+    sudo pip3 install flask-cors --break-system-packages
+Run python script at startup
+    edit /etc/rc.local
+    - add following line before exit 0
+    bash -c '/usr/bin/python3 /home/voyage/Orion-battery-monitor/python_scripts/main.py > /home/voyage/mylog.log 2>&1' &
+Run Electron app at startup 
+    - create a file display.desktop in /etc/xdg/autostart using following command
+        sudo nano /etc/xdg/autostart/display.desktop
+    - add following lines
+        [Desktop Entry]
+        Name=OrionBatteryMonitor
+        Exec=/home/voyage/Orion-battery-monitor-linux-arm64/orion-battery-monitor
+    - save
+
+

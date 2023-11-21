@@ -61,7 +61,7 @@ let getAlarmHistory = (BMSNumber) => {
 
 }
 let gotAlarmHistory = (callback) => {
-  console.log("gotAlarmHistory");
+  // console.log("gotAlarmHistory");
   gotAlarmHistoryCallback = callback;
 }
 
@@ -88,7 +88,7 @@ let getCellInfo = (BMSNumber) => {
 
 }
 let gotCellInfo = (callback) => {
-  console.log("gotCellInfo");
+  // console.log("gotCellInfo");
   gotCellInfoCallback = callback;
 }
 
@@ -97,14 +97,14 @@ let gotCellInfo = (callback) => {
 // ##########################################################
 
 let getIO = (BMSNumber) => {
-  console.log("getIO");
+
   fetch(`http://127.0.0.1:5001/get_io/${BMSNumber}`).then((data) => {
     return data.text();
   }
   ).then((text) => {
     // console.log("data: ", text);
     var io = JSON.parse(text);
-    console.log("io: ", io.isFault);
+    // console.log("io: ", io.isFault);
     gotIOCallback(io);
   }
   ).catch(e => {
@@ -124,7 +124,7 @@ let gotIO = (callback) => {
 // ##########################################################
 
 let getDetails = (BMSNumber) => {
-  console.log("getDetails");
+  // console.log("getDetails");
   fetch(`http://127.0.0.1:5001/get_details/${BMSNumber}`).then((data) => {
     return data.text();
   }
@@ -150,7 +150,7 @@ let gotDetails = (callback) => {
 // ##########################################################
 
 let getActiveAlarms = (BMSNumber) => {
-  console.log("getActiveAlarms");
+  // console.log("getActiveAlarms");
   fetch(`http://127.0.0.1:5001/get_active_alarms/${BMSNumber}`).then((data) => {
     return data.text();
   }
@@ -178,7 +178,7 @@ let gotActiveAlarms = (callback) => {
 
 
 let getSummaryInfo = (BMSNumber) => {
-  console.log("getSummaryInfo");
+  // console.log("getSummaryInfo");
   fetch(`http://127.0.0.1:5001/get_battery_summary/${BMSNumber}`).then((data) => {
     return data.text();
   }
@@ -194,7 +194,6 @@ let getSummaryInfo = (BMSNumber) => {
   )
 }
 let gotSummaryInfo = (callback) => {
-  console.log("gotSummaryInfo");
   gotSummaryInfoCallback = callback;
 }
 
@@ -204,7 +203,7 @@ let gotSummaryInfo = (callback) => {
 
 
 let getTileInfo = (bms) => {
-  console.log("getTileInfo");
+  // console.log("getTileInfo");
   fetch(`http://127.0.0.1:5001/get_tile_info/`).then((data) => {
     return data.text();
   }).then((text) => {
@@ -233,7 +232,7 @@ let gotTileInfo = (callback) => {
 
 //ping python script
 let pingPython = () => {
-  console.log("pingPython");
+  // console.log("pingPython");
   fetch(`http://127.0.0.1:5001/ping`).then((data) => {
     return data.text();
   }).then((text) => {

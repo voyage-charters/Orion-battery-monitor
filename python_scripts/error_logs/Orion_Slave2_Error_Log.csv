@@ -3,3 +3,6 @@ DateTime,Log Description,Action
 2023-10-13 11:44:31,DTC P0A08 : Charger Safety Relay,Raised
 2023-10-13 11:44:34.956785,BMS Reset by operator,N/A
 2023-10-13 11:44:35,DTC P0A08 : Charger Safety Relay,Cleared
+2023-11-20 09:21:13,DTC P0A08 : Charger Safety Relay,Raised
+2023-11-20 09:29:38.848033,BMS Reset by operator,N/A
+2023-11-20 09:29:38,DTC P0A08 : Charger Safety Relay,Cleared

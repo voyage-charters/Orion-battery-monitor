@@ -1,0 +1,34 @@
+Install Rpi operating system
+
+Install WAVESHARE 2-CH_CAN_FD_HAT
+    https://www.waveshare.com/wiki/2-CH_CAN_FD_HAT
+    - Enable I2C
+      - sudo raspi-config 
+      - Choose Interfacing Options -> I2C -> Yes.
+
+    - Install bcm2835 drivers
+    - install wiringpy
+    - Run in dual SPI mode
+     copy following to /boot/config.txt
+        dtparam=spi=on
+        dtoverlay=spi1-3cs
+        dtoverlay=mcp251xfd,spi0-0,interrupt=25
+        dtoverlay=mcp251xfd,spi1-0,interrupt=24
+     ```
+
+Install NodeJS
+    https://www.instructables.com/Install-Nodejs-and-Npm-on-Raspberry-Pi/
+Install NodeJS packages 
+
+Install Python3 packages
+    - Run with sudo to install for all users otherwise it wont work at startup
+    sudo pip3 install python-can --break-system-packages
+    sudo pip3 install flask --break-system-packages
+    sudo pip3 install flask-cors --break-system-packages
+    
+Run python script at startup
+    edit /etc/rc.local
+    - add following line before exit 0
+    bash -c '/usr/bin/python3 /home/voyage/Orion-battery-monitor/python_scripts/main.py > /home/voyage/mylog.log 2>&1' &
+Run Electron app at startup 
+

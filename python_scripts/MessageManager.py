@@ -244,8 +244,12 @@ class BMSUnit():
             self.allowDischarge    = value
         elif name == 'Low_Cell_Voltage':
             self.lowCellVoltage = value
+        elif name == 'Low_Cell_ID':
+            self.lowCellId = value
         elif name == 'High_Cell_Voltage':
             self.highCellVoltage = value
+        elif name == 'High_Cell_ID':
+            self.highCellId = value
         elif name == 'Low_Temperature':
             self.lowTemp = value -273
         elif name == 'High_Temperature':
@@ -403,6 +407,20 @@ class CombinedBMSUnit(BMSUnit):
             
         elif name == 'Parallel_Combined_Faults_Present':
             self.isFault = value
+        elif name == 'Parallel_CCL':
+      
+            self.packCCL = value
+        elif name == 'Parallel_DCL':
+            self.packDCL = value
+        elif name == 'Low_Cell_Voltage':
+            self.lowCellVoltage = value
+        elif name == 'High_Cell_Voltage':
+            self.highCellVoltage = value
+        elif name == 'Low_Temperature':
+            self.lowTemp = value-273
+        elif name == 'High_Temperature':
+            self.highTemp = value-273
+            
             
 
 
@@ -501,7 +519,7 @@ class MessageManager():
     CANMessage('Pack_SOC',                                  0x3b1,32,8,BitOrder.MSB,ByteOrder.BigEndian,0.5,BMSOrder.Master),
     CANMessage('Relay_State',                               0x3b1,40,8,BitOrder.MSB,ByteOrder.BigEndian,1,BMSOrder.Master),
     CANMessage('Pack_DCL',                                  0x3b2,0,16,BitOrder.MSB,ByteOrder.BigEndian,1,BMSOrder.Master),
-    CANMessage('Pack_CCL',                                  0x3b2,16,8,BitOrder.MSB,ByteOrder.BigEndian,1,BMSOrder.Master),
+    CANMessage('Pack_CCL',                                  0x3b2,16,16,BitOrder.MSB,ByteOrder.BigEndian,1,BMSOrder.Master),
     CANMessage('High_Temperature',                          0x3b2,32,8,BitOrder.MSB,ByteOrder.BigEndian,1,BMSOrder.Master),
     CANMessage('Low_Temperature',                           0x3b2,40,8,BitOrder.MSB,ByteOrder.BigEndian,1,BMSOrder.Master),
     
@@ -534,6 +552,10 @@ class MessageManager():
     CANMessage('Charge Enable Inverted',                    0x3b3,26,1,BitOrder.MSB,ByteOrder.BigEndian,1,BMSOrder.Master),
     CANMessage('Discharge Enable Inverted',                 0x3b3,27,1,BitOrder.MSB,ByteOrder.BigEndian,1,BMSOrder.Master),
 
+    CANMessage('Low_Cell_Voltage',                          0x3b4,0,16,BitOrder.MSB,ByteOrder.LittleEndian,0.001,BMSOrder.Master),
+    CANMessage('Low_Cell_ID',                               0x3b4,16,8,BitOrder.MSB,ByteOrder.LittleEndian,1,BMSOrder.Master),
+    CANMessage('High_Cell_Voltage',                         0x3b4,24,16,BitOrder.MSB,ByteOrder.LittleEndian,0.001,BMSOrder.Master),
+    CANMessage('High_Cell_ID',                              0x3b4,42,8,BitOrder.MSB,ByteOrder.LittleEndian,1,BMSOrder.Master),
 
         #Slave1 Unit messages
     CANMessage('Pack_Current',                              0x4b1,0,16,BitOrder.MSB,ByteOrder.LittleEndian,0.1,BMSOrder.Slave1,isSigned=True),
@@ -541,7 +563,7 @@ class MessageManager():
     CANMessage('Pack_SOC',                                  0x4b1,32,8,BitOrder.MSB,ByteOrder.BigEndian,0.5,BMSOrder.Slave1),
     CANMessage('Relay_State',                               0x4b1,40,8,BitOrder.MSB,ByteOrder.BigEndian,1,BMSOrder.Slave1),
     CANMessage('Pack_DCL',                                  0x4b2,0,16,BitOrder.MSB,ByteOrder.BigEndian,1,BMSOrder.Slave1),
-    CANMessage('Pack_CCL',                                  0x4b2,16,8,BitOrder.MSB,ByteOrder.BigEndian,1,BMSOrder.Slave1),
+    CANMessage('Pack_CCL',                                  0x4b2,16,16,BitOrder.MSB,ByteOrder.BigEndian,1,BMSOrder.Slave1),
     CANMessage('High_Temperature',                          0x4b2,32,8,BitOrder.MSB,ByteOrder.BigEndian,1,BMSOrder.Slave1),
     CANMessage('Low_Temperature',                           0x4b2,40,8,BitOrder.MSB,ByteOrder.BigEndian,1,BMSOrder.Slave1),
     CANMessage('DTC P0A1F : Internal Cell Communication',   0x4b3,0,1,BitOrder.MSB,ByteOrder.BigEndian,1,BMSOrder.Slave1), 
@@ -572,13 +594,17 @@ class MessageManager():
     CANMessage('MultiPurpose_Enable',                       0x4b3,25,1,BitOrder.MSB,ByteOrder.BigEndian,1,BMSOrder.Slave1), 
     CANMessage('Charge Enable Inverted',                    0x4b3,26,1,BitOrder.MSB,ByteOrder.BigEndian,1,BMSOrder.Slave1),
     CANMessage('Discharge Enable Inverted',                 0x4b3,27,1,BitOrder.MSB,ByteOrder.BigEndian,1,BMSOrder.Slave1),
+    CANMessage('Low_Cell_Voltage',                          0x4b4,0,16,BitOrder.MSB,ByteOrder.LittleEndian,0.001,BMSOrder.Slave1),
+    CANMessage('Low_Cell_ID',                               0x4b4,16,8,BitOrder.MSB,ByteOrder.LittleEndian,1,BMSOrder.Slave1),
+    CANMessage('High_Cell_Voltage',                         0x4b4,24,16,BitOrder.MSB,ByteOrder.LittleEndian,0.001,BMSOrder.Slave1),
+    CANMessage('High_Cell_ID',                              0x4b4,42,8,BitOrder.MSB,ByteOrder.LittleEndian,1,BMSOrder.Slave1),
         #Slave2 Unit messages
     CANMessage('Pack_Current',                              0x5b1,0,16,BitOrder.MSB,ByteOrder.LittleEndian,0.1,BMSOrder.Slave2,isSigned=True),
     CANMessage('Inst_Voltage',                              0x5b1,16,16,BitOrder.MSB,ByteOrder.BigEndian,0.1,BMSOrder.Slave2),
     CANMessage('Pack_SOC',                                  0x5b1,32,8,BitOrder.MSB,ByteOrder.BigEndian,0.5,BMSOrder.Slave2),
     CANMessage('Relay_State',                               0x5b1,40,8,BitOrder.MSB,ByteOrder.BigEndian,1,BMSOrder.Slave2),
     CANMessage('Pack_DCL',                                  0x5b2,0,16,BitOrder.MSB,ByteOrder.BigEndian,1,BMSOrder.Slave2),
-    CANMessage('Pack_CCL',                                  0x5b2,16,8,BitOrder.MSB,ByteOrder.BigEndian,1,BMSOrder.Slave2),
+    CANMessage('Pack_CCL',                                  0x5b2,16,16,BitOrder.MSB,ByteOrder.BigEndian,1,BMSOrder.Slave2),
     CANMessage('High_Temperature',                          0x5b2,32,8,BitOrder.MSB,ByteOrder.BigEndian,1,BMSOrder.Slave2),
     CANMessage('Low_Temperature',                           0x5b2,40,8,BitOrder.MSB,ByteOrder.BigEndian,1,BMSOrder.Slave2),
     CANMessage('DTC P0A1F : Internal Cell Communication',   0x5b3,0,1,BitOrder.MSB,ByteOrder.BigEndian,1,BMSOrder.Slave2), 
@@ -609,13 +635,17 @@ class MessageManager():
     CANMessage('MultiPurpose_Enable',                       0x5b3,25,1,BitOrder.MSB,ByteOrder.BigEndian,1,BMSOrder.Slave2), 
     CANMessage('Charge Enable Inverted',                    0x5b3,26,1,BitOrder.MSB,ByteOrder.BigEndian,1,BMSOrder.Slave2),
     CANMessage('Discharge Enable Inverted',                 0x5b3,27,1,BitOrder.MSB,ByteOrder.BigEndian,1,BMSOrder.Slave2),
+    CANMessage('Low_Cell_Voltage',                          0x5b4,0,16,BitOrder.MSB,ByteOrder.LittleEndian,0.001,BMSOrder.Slave2),
+    CANMessage('Low_Cell_ID',                               0x5b4,16,8,BitOrder.MSB,ByteOrder.LittleEndian,1,BMSOrder.Slave2),
+    CANMessage('High_Cell_Voltage',                         0x5b4,24,16,BitOrder.MSB,ByteOrder.LittleEndian,0.001,BMSOrder.Slave2),
+    CANMessage('High_Cell_ID',                              0x5b4,42,8,BitOrder.MSB,ByteOrder.LittleEndian,1,BMSOrder.Slave2),
         #Slave2 Unit messages
     CANMessage('Pack_Current',                              0x6b1,0,16,BitOrder.MSB,ByteOrder.BigEndian,0.1,BMSOrder.Slave3),
     CANMessage('Inst_Voltage',                              0x6b1,16,16,BitOrder.MSB,ByteOrder.BigEndian,0.1,BMSOrder.Slave3),
     CANMessage('Pack_SOC',                                  0x6b1,32,8,BitOrder.MSB,ByteOrder.BigEndian,0.5,BMSOrder.Slave3),
     CANMessage('Relay_State',                               0x6b1,40,8,BitOrder.MSB,ByteOrder.BigEndian,1,BMSOrder.Slave3),
     CANMessage('Pack_DCL',                                  0x6b2,0,16,BitOrder.MSB,ByteOrder.BigEndian,1,BMSOrder.Slave3),
-    CANMessage('Pack_CCL',                                  0x6b2,16,8,BitOrder.MSB,ByteOrder.BigEndian,1,BMSOrder.Slave3),
+    CANMessage('Pack_CCL',                                  0x6b2,16,16,BitOrder.MSB,ByteOrder.BigEndian,1,BMSOrder.Slave3),
     CANMessage('High_Temperature',                          0x6b2,32,8,BitOrder.MSB,ByteOrder.BigEndian,1,BMSOrder.Slave3),
     CANMessage('Low_Temperature',                           0x6b2,40,8,BitOrder.MSB,ByteOrder.BigEndian,1,BMSOrder.Slave3),
     CANMessage('DTC P0A1F : Internal Cell Communication',   0x6b3,0,1,BitOrder.MSB,ByteOrder.BigEndian,1,BMSOrder.Slave3), 
@@ -646,6 +676,10 @@ class MessageManager():
     CANMessage('MultiPurpose_Enable',                       0x6b3,25,1,BitOrder.MSB,ByteOrder.BigEndian,1,BMSOrder.Slave3), 
     CANMessage('Charge Enable Inverted',                    0x6b3,26,1,BitOrder.MSB,ByteOrder.BigEndian,1,BMSOrder.Slave3),
     CANMessage('Discharge Enable Inverted',                 0x6b3,27,1,BitOrder.MSB,ByteOrder.BigEndian,1,BMSOrder.Slave3),
+    CANMessage('Low_Cell_Voltage',                          0x6b4,0,16,BitOrder.MSB,ByteOrder.LittleEndian,0.001,BMSOrder.Slave3),
+    CANMessage('Low_Cell_ID',                               0x6b4,16,8,BitOrder.MSB,ByteOrder.LittleEndian,1,BMSOrder.Slave3),
+    CANMessage('High_Cell_Voltage',                         0x6b4,24,16,BitOrder.MSB,ByteOrder.LittleEndian,0.001,BMSOrder.Slave3),
+    CANMessage('High_Cell_ID',                              0x6b4,42,8,BitOrder.MSB,ByteOrder.LittleEndian,1,BMSOrder.Slave3),
 
 #Master combined BMS
 
@@ -662,10 +696,10 @@ class MessageManager():
 
     CANMessage('Parallel_Active_Strings',                   0x372,0,8,BitOrder.MSB,ByteOrder.LittleEndian,1,BMSOrder.Combined),
 
-    CANMessage('Low_Cell_Voltage',                          0x373,0,8,BitOrder.MSB,ByteOrder.LittleEndian,0.001,BMSOrder.Combined),
-    CANMessage('High_Cell_Voltage',                         0x373,8,8,BitOrder.MSB,ByteOrder.BigEndian,0.001,BMSOrder.Combined),
-    CANMessage('Low_Temperature',                           0x373,0,8,BitOrder.MSB,ByteOrder.LittleEndian,1,BMSOrder.Combined),
-    CANMessage('High_Temperature',                          0x373,8,8,BitOrder.MSB,ByteOrder.BigEndian,1,BMSOrder.Combined),
+    CANMessage('Low_Cell_Voltage',                          0x373,0,16,BitOrder.MSB,ByteOrder.LittleEndian,0.001,BMSOrder.Combined),
+    CANMessage('High_Cell_Voltage',                         0x373,16,16,BitOrder.MSB,ByteOrder.LittleEndian,0.001,BMSOrder.Combined),
+    CANMessage('Low_Temperature',                           0x373,32,16,BitOrder.MSB,ByteOrder.LittleEndian,1,BMSOrder.Combined),
+    CANMessage('High_Temperature',                          0x373,48,16,BitOrder.MSB,ByteOrder.LittleEndian,1,BMSOrder.Combined),
 
     CANMessage('Parallel_Combined_Charger_Safety_Inverted', 0x3b3,29,1,BitOrder.MSB,ByteOrder.BigEndian,1,BMSOrder.Combined), 
     CANMessage('Parallel_Combined_Charge_Enable_Inverted',  0x3b3,30,1,BitOrder.MSB,ByteOrder.BigEndian,1,BMSOrder.Combined), 

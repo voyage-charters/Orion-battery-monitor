@@ -74,7 +74,7 @@ var pageRefresh = setInterval(function () {
     window.electronAPI.pingPython();
 
     if (isPythonRunning) {
-        console.log("python is running");
+        // console.log("python is running");
         if (isCanDeviceAvailable) {
             // console.log("getting tile info");
             if (isCanBusStarted) {
@@ -179,7 +179,7 @@ const gotCellInfo = (cellInfo) => {
         </tbody>
     </table>`;
 
-    console.log(tableString);
+
     mainInfo.innerHTML += tableString;
 
 
@@ -196,8 +196,6 @@ const gotCellInfo = (cellInfo) => {
 
 }
 const gotIO = (IO) => {
-    console.log("gotIO");
-    console.log(IO);
     var statusColor = "white";
     let dispString = "";
 
@@ -263,7 +261,7 @@ const gotIO = (IO) => {
 
 
 const gotDetails = (battery) => {
-    console.log("gotDetails");
+    // console.log("gotDetails");
     // console.log(details);
     addHeader("Battery Details");
     // add details info
@@ -281,7 +279,7 @@ const gotDetails = (battery) => {
     // low temp
     mainInfo.innerHTML += getInfoRow("Low Temperature", [`${battery.lowTemp} °C`]);
     // Heat Sink Temp
-    mainInfo.innerHTML += getInfoRow("Heat Sink Temperature", [`${battery.heatSinkTemp} °C`]);
+    // mainInfo.innerHTML += getInfoRow("Heat Sink Temperature", [`${battery.heatSinkTemp} °C`]);
 
 
 
@@ -292,7 +290,7 @@ const gotDetails = (battery) => {
 
 
 const gotActiveAlarms = (alarms) => {
-    console.log(` list of active alarms ${alarms.activeAlarms}`);
+    // console.log(` list of active alarms ${alarms.activeAlarms}`);
     addHeader("Active Alarms");
     // add alarm info
     // loop through alarms
@@ -321,7 +319,7 @@ const gotConnecting = (connecting) => {
 }
 
 const gotSummaryInfo = (battery) => {
-    console.log("gotSummaryInfo");
+    // console.log("gotSummaryInfo");
     // console.log(battery);
     var statusColor = "red";
     let statusString = "OFFLINE";
@@ -330,23 +328,29 @@ const gotSummaryInfo = (battery) => {
     statusColor = batteryStatus[1];
     addHeader("Battery Summary");
 
-    mainInfo.innerHTML += getInfoRow("Status", [statusString], null, statusColor);
-    var batteryPowerStr = getPowerString(battery.power);
-    mainInfo.innerHTML += getInfoRow("Battery Summary", [`${battery.instantVoltage} V`, `${battery.packCurrent}`, batteryPowerStr]);
-    mainInfo.innerHTML += getInfoRow("State Of Charge (SOC)", [`${battery.packSOC} %`]);
-    // Details
-    mainInfo.innerHTML += getInfoRow("Details", [">"], pageIndexes.Details);
-    mainInfo.innerHTML += getInfoRow("Active Alarms", [`${battery.activeAlarms.length}`, ">"], pageIndexes.activeAlarms);
-    mainInfo.innerHTML += getInfoRow("Alarms History", [">"], pageIndexes.alarmHistory);
-    mainInfo.innerHTML += getInfoRow("IO", [">"], pageIndexes.IO);
-    // Cell Voltages
-    mainInfo.innerHTML += getInfoRow("Cell Info", [`${battery.highCellVoltage}`, `${battery.lowCellVoltage}`, ">"], pageIndexes.CellInfo, "white");
-    if (battery.BMSNumber == 0) {
-        // master BMS
 
+    // Cell Voltages
+    if (battery.BMSNumber == 0) {
+        // master combined BMS
+        var batteryPowerStr = getPowerString(battery.power);
+        mainInfo.innerHTML += getInfoRow("Battery Summary", [`${battery.instantVoltage} V`, `${battery.packCurrent} A`, batteryPowerStr]);
+        mainInfo.innerHTML += getInfoRow("State Of Charge (SOC)", [`${battery.packSOC} %`]);
+        mainInfo.innerHTML += getInfoRow("Details", [">"], pageIndexes.Details);
         mainInfo.innerHTML += getInfoRow("Reset All BMS",[">"], pageIndexes.ResetBMSs, "white");
 
         
+    } else {
+        mainInfo.innerHTML += getInfoRow("Status", [statusString], null, statusColor);
+        var batteryPowerStr = getPowerString(battery.power);
+        mainInfo.innerHTML += getInfoRow("Battery Summary", [`${battery.instantVoltage} V`, `${battery.packCurrent} A`, batteryPowerStr]);
+        mainInfo.innerHTML += getInfoRow("State Of Charge (SOC)", [`${battery.packSOC} %`]);
+        mainInfo.innerHTML += getInfoRow("Details", [">"], pageIndexes.Details);
+        mainInfo.innerHTML += getInfoRow("IO", [">"], pageIndexes.IO);
+
+        mainInfo.innerHTML += getInfoRow("Active Alarms", [`${battery.activeAlarms.length}`, ">"], pageIndexes.activeAlarms);
+        mainInfo.innerHTML += getInfoRow("Alarms History", [">"], pageIndexes.alarmHistory);
+        mainInfo.innerHTML += getInfoRow("Cell Info", [`${battery.highCellVoltage}`, `${battery.lowCellVoltage}`, ">"], pageIndexes.CellInfo, "white");
+
     }
 
 
@@ -411,8 +415,8 @@ function setPageIndex(page) {
 
 
 const gotTileInfo = (batteries) => {
-    console.log("gotTileInfo");
-    console.log(batteries);
+    // console.log("gotTileInfo");
+    // console.log(batteries);
     //list through batteries in battery tile info
     // console.log(`batteryTileInfo: ${typeof batteries}`);
     mainInfo.innerHTML = "";
@@ -428,8 +432,8 @@ const gotTileInfo = (batteries) => {
 }
 
 function manageInfo() {
-    console.log("manage info");
-    console.log(`pageIndex: ${pageIndex}`);
+    // console.log("manage info");
+    // console.log(`pageIndex: ${pageIndex}`);
     // console.log(`page index: ${pageIndex}`);
     if (pageIndex[0] == pageIndexes.Home) {
         // console.log("home page");
@@ -437,34 +441,34 @@ function manageInfo() {
         window.electronAPI.getTileInfo();
     } else if (pageIndex[0] == pageIndexes.Summary) {
         window.electronAPI.getSummaryInfo(BMSID);
-        console.log("summary page");
+        // console.log("summary page");
     } else if (pageIndex[0] == pageIndexes.Details) {
-        console.log("details page");
+        // console.log("details page");
         window.electronAPI.getDetails(BMSID);
     } else if (pageIndex[0] == pageIndexes.activeAlarms) {
-        console.log("activeAlarms page");
+        // console.log("activeAlarms page");
         // get active alarms list
         window.electronAPI.getActiveAlarms(BMSID);
     }
     else if (pageIndex[0] == pageIndexes.alarmHistory) {
-        console.log("alarmHistory page");
+        // console.log("alarmHistory page");
         window.electronAPI.getAlarmHistory(BMSID);
     }
     else if (pageIndex[0] == pageIndexes.IO) {
-        console.log("IO page");
+        // console.log("IO page");
         window.electronAPI.getIO(BMSID);
     }
     else if (pageIndex[0] == pageIndexes.CellInfo) {
-        console.log("CellInfo page");
+        // console.log("CellInfo page");
         window.electronAPI.getCellInfo(BMSID);
     }
     else if (pageIndex[0] == pageIndexes.ResetBMSs) {
-        console.log("ResetBMSs page");
+        // console.log("ResetBMSs page");
         window.electronAPI.sendResetCommand();
         pageIndex.shift();
     }
     else {
-        console.log("unknown page");
+        // console.log("unknown page");
         pageIndex = [pageIndexes.Home];
     }
 
@@ -506,13 +510,15 @@ function getPowerString(power) {
 function getBatteryTile(battery) {
     // const batteryPower = battery.voltage * battery.amps;
 
-    var batteryStatus = getStatusString(battery);;
+    
     var batteryDraw;
-    var statusColor = "red";
-    let statusString = "OFFLINE";
-    let statusDesc = "STATUS"
-    statusString = batteryStatus[0];
-    statusColor = batteryStatus[1];
+    // var statusColor = "red";
+    // let statusString = "OFFLINE";
+    let statusDesc = "STATUS";
+    var batteryStatus = getStatusString(battery);
+    var statusString = batteryStatus[0];
+    var statusColor = batteryStatus[1];
+    
     //absolute value of batteryPower
     var batteryPowerStr = getPowerString(battery.power);
 
@@ -526,11 +532,12 @@ function getBatteryTile(battery) {
         // charging
         batteryDraw = "charging";
     }
-    if (battery.status == "OK") {
+    if (statusString == "OK") {
         statusColor = "green";
     } else {
         statusColor = "red";
     }
+
     if (battery.BMSNumber == 0) {
         // master BMS
         statusString = "";

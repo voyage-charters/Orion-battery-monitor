@@ -28,6 +28,7 @@ def ping():
 	return  "pong"
 
 app = Flask(__name__)
+app.json.sort_keys = False
 
 @app.route("/ping")
 @cross_origin()
@@ -82,7 +83,7 @@ def get_current_user():
             "relayState" : BMS.relayState,
             "BMSNumber" : BMS.get_unit_number(),
         }     
-    # print(retobj)  
+    # print(jsonify(retobj))  
     return jsonify(retobj)
 
 # get battery summary with BMSNumber as an input
@@ -104,10 +105,10 @@ def get_battery_summary(BMSNumber):
         "highCellVoltage" : "%0.2f" % (BMS.highCellVoltage,),
         "lowCellVoltage" : "%0.2f" % (BMS.lowCellVoltage,),
         "activeAlarms" : BMS.get_active_alarms(),
-
-
     }
-    # print(retobj)
+    if BMSNumber == "1":
+        print(retobj)
+        
     return jsonify(retobj)
 
 # get active alarms with BMSNumber as an input

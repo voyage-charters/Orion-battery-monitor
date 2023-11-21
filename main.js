@@ -49,6 +49,16 @@ function createWindow () {
   });
   mainWindow.maximize();
   mainWindow.loadFile('index.html')
+  mainWindow.webContents.on('did-finish-load', () => {
+    const pythonProcess = spawn('python', [path.join(app.getAppPath(), 'python_scripts/main.py')])
+    pythonProcess.stdout.on('data', (data) => {
+      console.log(`Python script output: ${data}`);
+    });
+    
+    pythonProcess.stderr.on('data', (data) => {
+      console.error(`Error from Python script: ${data}`);
+    });
+  });
 }
 
 
@@ -62,7 +72,12 @@ app.whenReady().then(() => {
   })
 })
 
-
+app.on('before-quit', () => {
+  // Terminate the Python process before quitting the app
+  if (pythonProcess) {
+    pythonProcess.kill();
+  }
+});
 
 
 // Quit when all windows are closed.
