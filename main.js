@@ -75,7 +75,7 @@ function createWindow() {
     });
 
     pythonProcess.stderr.on('data', (data) => {
-      console.error(`Error from Python script: ${data}`);
+      console.error(`main.py: ${data}`);
     });
   });
 }

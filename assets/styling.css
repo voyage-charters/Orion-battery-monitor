@@ -1,16 +1,16 @@
 .main-window::-webkit-scrollbar {
    width: 5px;
- }
-  
- .main-window::-webkit-scrollbar-track {
+}
+
+.main-window::-webkit-scrollbar-track {
    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-   background: rgb(35,43,58);
- }
-    
- .main-window::-webkit-scrollbar-thumb {
-   background-color: rgb(18,26,39);
-   outline: 1px solid rgb(35,43,58);
- }
+   background: rgb(35, 43, 58);
+}
+
+.main-window::-webkit-scrollbar-thumb {
+   background-color: rgb(18, 26, 39);
+   outline: 1px solid rgb(35, 43, 58);
+}
 
 body {
    display: flex;
@@ -22,26 +22,29 @@ body {
    background-color: #232b3a !important;
 
 }
-hr.divider { 
-    margin: 0em;
-    border-width: 2px;
-  } 
-  
-hr {
-    margin-top: 32px;
+
+hr.divider {
+   margin: 0em;
+   border-width: 2px;
 }
+
+hr {
+   margin-top: 32px;
+}
+
 .main-window {
    height: 544px;
    width: 960px;
    overflow: auto;
-   background-color: rgb(35,43,58);
+   background-color: rgb(35, 43, 58);
    color: white;
    position: relative;
    /* modern scroll bar */
    scrollbar-width: thin;
    scrollbar-color: #2f3a4c #1e242f;
-   
+
 }
+
 .main-content {
    padding: 5px;
    width: 100%;
@@ -49,8 +52,9 @@ hr {
    position: absolute;
    top: 0;
    left: 0;
-   
+
 }
+
 .logo-img {
    height: 60px;
    margin-left: 10px;
@@ -59,123 +63,141 @@ hr {
 /* Title styling */
 
 
-.main-window, .sidebar {
+.main-window,
+.sidebar {
    height: 400px;
 }
+
 /* Side bar styling */
 .sidebar {
-    
-    width: 0;
-    position: relative;
-    z-index: 1;
-    top: 0;
-    right: 0;
-    /* left: calc(100%-250px); */
-    background-color: #111;
-    overflow-x: hidden;
-    transition: 0.5s;
-    padding-top: 60px;
- }
- 
- .sidebar a {
-    padding: 8px 8px 8px 32px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #818181;
-    display: block;
-    transition: 0.3s;
- }
- 
- .sidebar a:hover {
-    color: #f1f1f1;
- }
- 
- .sidebar .closebtn {
-    position: absolute;
-    top: 0;
-    right: 25px;
-    font-size: 36px;
-    margin-left: 50px;
- }
- 
- .openbtn {
-    /* position: absolute; */
 
-    /* top: 0px;
+   width: 0;
+   position: relative;
+   z-index: 1;
+   top: 0;
+   right: 0;
+   /* left: calc(100%-250px); */
+   background-color: #111;
+   overflow-x: hidden;
+   transition: 0.5s;
+   padding-top: 60px;
+}
+
+.sidebar a {
+   padding: 8px 8px 8px 32px;
+   text-decoration: none;
+   font-size: 25px;
+   color: #818181;
+   display: block;
+   transition: 0.3s;
+}
+
+.sidebar a:hover {
+   color: #f1f1f1;
+}
+
+.sidebar .closebtn {
+   position: absolute;
+   top: 0;
+   right: 25px;
+   font-size: 36px;
+   margin-left: 50px;
+}
+
+.openbtn {
+   /* position: absolute; */
+
+   /* top: 0px;
     left: 16px; */
-    font-size: 30px;
-    cursor: pointer;
-    color: black;
-    /* padding: 10px 10px; */
-    border: none;
-    background-color: rgba(68, 68, 68,0);
- }
- 
- .openbtn:hover {
-    background-color: rgba(68, 68, 68,0.2);
- }
- 
- #content {
-    transition: margin-left 0.5s;
-    padding: 16px;
- }
- 
- /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
- 
- @media screen and (max-height: 450px) {
-    .sidebar {
-       padding-top: 15px;
-    }
-    .sidebar a {
-       font-size: 18px;
-    }
- }
+   font-size: 30px;
+   cursor: pointer;
+   color: black;
+   /* padding: 10px 10px; */
+   border: none;
+   background-color: rgba(68, 68, 68, 0);
+}
 
- /* Battery tile styling */
- .main-info {
+.openbtn:hover {
+   background-color: rgba(68, 68, 68, 0.2);
+}
+
+#content {
+   transition: margin-left 0.5s;
+   padding: 16px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+
+@media screen and (max-height: 450px) {
+   .sidebar {
+      padding-top: 15px;
+   }
+
+   .sidebar a {
+      font-size: 18px;
+   }
+}
+
+/* Battery tile styling */
+.main-info {
    padding-top: 10px;
    overflow: auto;
    width: 90%;
    margin: auto;
 
 
- }
- .battery-tile {
+}
+
+.battery-tile {
    height: 80px;
    width: 80%;
    border-color: black;
-   background-color: rgb(18,26,39);
+   background-color: rgb(18, 26, 39);
    margin-bottom: 10px;
- }
- .battery-tile.img{
-   height: 50px; 
-   width: 50px; 
-   object-fit: cover;
- }
- .bat-inf{
-   font-size: 18px;
- }
+}
 
- .info-row{
+.battery-tile:active {
+
+   background-color: rgb(30, 43, 64);
+
+}
+
+.battery-tile.img {
+   height: 50px;
+   width: 50px;
+   object-fit: cover;
+}
+
+.bat-inf {
+   font-size: 18px;
+}
+
+.info-row {
    width: 95%;
    color: white;
    /* height: 50px; */
-   background-color: rgb(18,26,39);
-   margin-left:10px ;
+   background-color: rgb(18, 26, 39);
+   margin-left: 10px;
    margin-top: 2px;
    padding-top: 3px;
    padding-bottom: 3px;
    /* margin-right: auto; */
- }
+}
+.info-row:active {
+
+   background-color: rgb(30, 43, 64);
+
+}
 
 
-.info_row, div {
+.info_row,
+div {
    padding: 0;
 }
 
 .info_row_parent {
    width: 90%;
-   max-width:800px ;
+   max-width: 800px;
 }
 
 /* .info_name{
@@ -193,15 +215,16 @@ hr {
    max-width: 50px;
    /* margin-top: 5px;
    margin-bottom: 2px; */
-   
-   
+
+
 }
 
 .cell-table {
    margin-top: 10px;
 }
 
-.cell-table td, tr {
-   color:white;
+.cell-table td,
+tr {
+   color: white;
    text-align: center;
 }
