@@ -27,8 +27,27 @@ Install Python3 packages
     sudo pip3 install flask-cors --break-system-packages
     
 Run python script at startup
+
+######### DONT NEED THIS ############
     edit /etc/rc.local
     - add following line before exit 0
     bash -c '/usr/bin/python3 /home/voyage/Orion-battery-monitor/python_scripts/main.py > /home/voyage/mylog.log 2>&1' &
 Run Electron app at startup 
+
+Disable rainbow splash screen
+    sudo nano /boot/config.txt
+    - add "disable_splash=1"
+Disable Logo
+    sudo nano /boot/cmdline.txt
+    - add "logo.nologo" 
+Mute kernel logs
+    sudo nano /boot/config.txt
+    - add "loglevel=3"
+Remove blinking curser
+    sudo nano /boot/cmdline.txt
+    - add "vt.global_cursor_default=0"
+
+
+
+
 

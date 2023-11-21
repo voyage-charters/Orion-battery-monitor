@@ -45,7 +45,7 @@ window.addEventListener("load", () => {
     window.electronAPI.gotStartCanRead(gotStartCanRead);
 
     // window.electronAPI.startPython();
-
+    hideCursor();
 
 
 
@@ -111,6 +111,14 @@ var pageRefresh = setInterval(function () {
 
 }, 1000);
 
+function hideCursor(){
+    if (isWindows){
+        // document.body.style.cursor = "none"; 
+    }else {
+        document.body.style.cursor = "none"; 
+    }
+    
+}
 
 function resetAllBMS() {
     window.electronAPI.sendResetCommand();
