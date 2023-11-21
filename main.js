@@ -32,7 +32,7 @@ function runPythonScript (){
 }
 function runRebootPiScript (){
   console.log("runRebootPiScript");
-  let python = spawn('python', [path.join(app.getAppPath(), '..', 'python_scripts/reboot_pi.py')])
+  let python = spawn('python', [path.join(app.getAppPath(), '..', 'python_scripts/rebootPi.py')])
   // let py = spawn('python', ['./python_scripts/main.py']);
   // py.stdout.on('data', data => console.log('data : ', data.toString()))
 }
