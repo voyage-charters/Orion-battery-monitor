@@ -45,7 +45,7 @@ window.addEventListener("load", () => {
     window.electronAPI.gotStartCanRead(gotStartCanRead);
 
     // window.electronAPI.startPython();
-    hideCursor();
+    
 
 
 
@@ -89,6 +89,7 @@ var pageRefresh = setInterval(function () {
             else {
                 showConnectingPage("Reading Batteries...");
                 window.electronAPI.startCanRead();
+                
             }
         } else {
             showConnectingPage("Starting Network...");
@@ -147,6 +148,7 @@ const gotStartCanBus = (canBus) => {
     // console.log(canBus);
     isCanDeviceAvailable = canBus.isConnected;
     isWindows = canBus.isWindows;
+    hideCursor();
 }
 
 const gotStartCanRead = (canBus) => {

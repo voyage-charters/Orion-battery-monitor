@@ -34,6 +34,9 @@ Run python script at startup
     bash -c '/usr/bin/python3 /home/voyage/Orion-battery-monitor/python_scripts/main.py > /home/voyage/mylog.log 2>&1' &
 Run Electron app at startup 
 
+Update Raspberry Pi firmware
+    sudo rpi-update
+
 Disable rainbow splash screen
     sudo nano /boot/config.txt
     - add "disable_splash=1"
@@ -46,6 +49,14 @@ Mute kernel logs
 Remove blinking curser
     sudo nano /boot/cmdline.txt
     - add "vt.global_cursor_default=0"
+Change boot logo 
+    cd /usr/share/plymouth/themes/pix
+    sudo mv splash.png splash_default.png
+
+    - copy new splash.png to /home/voyage/
+    cd /home/voyage/
+    sudo cp splash.png /usr/share/plymouth/themes/pix
+
 
 
 
