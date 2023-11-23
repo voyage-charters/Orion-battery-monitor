@@ -160,7 +160,7 @@ hr {
 .main-info {
    padding-top: 10px;
    overflow: auto;
-   width: 90%;
+   width: 95%;
    margin: auto;
 
 
@@ -168,7 +168,7 @@ hr {
 
 .battery-tile {
    height: 80px;
-   width: 80%;
+   width: 90%;
    border-color: black;
    background-color: rgb(18, 26, 39);
    margin-bottom: 10px;
