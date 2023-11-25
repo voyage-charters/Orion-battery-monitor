@@ -82,7 +82,6 @@ For a more in-depth installation guide read the [Waveshare wiki](https://www.wav
 
 ## Install NodeJS
     https://www.instructables.com/Install-Nodejs-and-Npm-on-Raspberry-Pi/
-## Install NodeJS packages 
 
 ## Install Python3 packages
 Run with sudo to install for all users otherwise it wont work at startup
@@ -91,34 +90,7 @@ Run with sudo to install for all users otherwise it wont work at startup
     sudo pip3 install flask --break-system-packages
     sudo pip3 install flask-cors --break-system-packages
 
-## Configure a silent boot
-
-### Edit the config.txt file
-
-``` 
-sudo nano /boot/config.txt
-```
-Disable rainbow splash screen
-
-add "disable_splash=1"
-add "loglevel=3"
-### Edit the cmdline.txt file
-All the configurations in this file are on one line so just make sure to append to the end of that line.
-    sudo nano /boot/cmdline.txt
-To disable the logo, add:
-    logo.nologo
-To remove the blinking curser, add:
-    vt.global_cursor_default=0
-
-## Change boot logo 
-Copy an image with the name splash.png to your root folder. In this case the root folder is '/home/voyage/.' Proceed to replace the splash image in the default theme to your own image:
-
-    cd /usr/share/plymouth/themes/pix
-    - rename the original splash image.
-    sudo mv splash.png splash_default.png
-    - copy new splash.png to /home/voyage/
-    cd /home/voyage/
-    sudo cp splash.png /usr/share/plymouth/themes/pix
+### Install NodeJS packages 
 
 ## Download Repo and build app
 
@@ -155,7 +127,37 @@ Add the following lines
 Reboot the device to test. 
 
 ### (Optional) Autostart without build
-    
+
+
+## Configure a silent boot
+
+### Edit the config.txt file
+
+``` 
+sudo nano /boot/config.txt
+```
+Disable rainbow splash screen
+
+add "disable_splash=1"
+add "loglevel=3"
+### Edit the cmdline.txt file
+All the configurations in this file are on one line so just make sure to append to the end of that line.
+    sudo nano /boot/cmdline.txt
+To disable the logo, add:
+    logo.nologo
+To remove the blinking curser, add:
+    vt.global_cursor_default=0
+
+## Change boot logo 
+Copy an image with the name splash.png to your root folder. In this case the root folder is '/home/voyage/.' Proceed to replace the splash image in the default theme to your own image:
+
+    cd /usr/share/plymouth/themes/pix
+    - rename the original splash image.
+    sudo mv splash.png splash_default.png
+    - copy new splash.png to /home/voyage/
+    cd /home/voyage/
+    sudo cp splash.png /usr/share/plymouth/themes/pix
+
 
 ## Update the app 
 The app can be updated by simply downloading the git repo again and building the app. No need to update the autostart files.
