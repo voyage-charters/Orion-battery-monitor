@@ -17,17 +17,62 @@ sudo apt-get clean
 ```
 ## Install WAVESHARE 2-CH_CAN_FD_HAT
 
-### Enable I2C
-```
-sudo raspi-config
-``` 
-Choose Interfacing Options -> I2C -> Yes.
+### Enable I2C Interface
 
-### Install bcm2835 drivers
-install wiringpy
+    sudo raspi-config
+    Choose Interfacing Options -> I2C -> Yes.
 
-Run in dual SPI mode
-copy following to /boot/config.txt
+Reboot Raspberry Pi
+
+### Install bcm2835 
+Open the terminal and run the commands below to install the bcm2835 library.
+
+    wget http://www.airspayce.com/mikem/bcm2835/bcm2835-1.60.tar.gz
+    tar zxvf bcm2835-1.60.tar.gz 
+    cd bcm2835-1.60/
+    sudo ./configure
+    sudo make
+    sudo make check
+    sudo make install
+    # For more information, please refer to the official website: http://www.airspayce.com/mikem/bcm2835/
+
+
+### Install wiringpy
+
+    #Open the Raspberry Pi terminal and run the following command
+    cd
+    sudo apt-get install wiringpi
+    #For Raspberry Pi systems after May 2019 (earlier than that can be executed without), an upgrade may be required:
+    wget https://project-downloads.drogon.net/wiringpi-latest.deb
+    sudo dpkg -i wiringpi-latest.deb
+    gpio -v
+    # Run gpio -v and version 2.52 will appear, if it doesn't it means there was an installation error
+
+    # Bullseye branch system using the following command:
+    git clone https://github.com/WiringPi/WiringPi
+    cd WiringPi
+    . /build
+    sudo gpio -v
+    # Run gpio -v and version 2.70 will appear, if it doesn't it means there was an installation error
+
+### Install Python libraries
+
+    sudo apt-get update
+    sudo apt-get install python3-pip
+    sudo apt-get install python3-pil
+    sudo apt-get install python3-numpy
+    sudo pip3 install RPi.GPIO
+    sudo pip3 install spidev 
+    sudo pip3 install python-can
+
+### Configure the device(dual SPI mode)
+
+Insert the module into Raspberry Pi, and then modify the config.txt file:
+
+    sudo nano /boot/config.txt
+
+Add the following commands at the last line:
+
     dtparam=spi=on
     dtoverlay=spi1-3cs
     dtoverlay=mcp251xfd,spi0-0,interrupt=25
@@ -41,11 +86,10 @@ For a more in-depth installation guide read the [Waveshare wiki](https://www.wav
 
 ## Install Python3 packages
 Run with sudo to install for all users otherwise it wont work at startup
-``` 
-sudo pip3 install python-can --break-system-packages
-sudo pip3 install flask --break-system-packages
-sudo pip3 install flask-cors --break-system-packages
-``` 
+
+    sudo pip3 install python-can --break-system-packages
+    sudo pip3 install flask --break-system-packages
+    sudo pip3 install flask-cors --break-system-packages
 
 ## Configure a silent boot
 
@@ -99,7 +143,6 @@ This method relies on running the executable file built in the previous step.
 Edit the desktop autostart file
 
     cd /etc/xdg/autostart/
-    -create and edit a file called display.desktop
     sudo touch display.desktop
     sudo nano /etc/xdg/autostart/display.desktop
 
