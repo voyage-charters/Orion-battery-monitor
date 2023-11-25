@@ -68,6 +68,7 @@ To remove the blinking curser, add:
 
 ## Change boot logo 
 Copy an image with the name splash.png to your root folder. In this case the root folder is '/home/voyage/.' Proceed to replace the splash image in the default theme to your own image:
+
     cd /usr/share/plymouth/themes/pix
     - rename the original splash image.
     sudo mv splash.png splash_default.png
@@ -92,16 +93,22 @@ Copy an image with the name splash.png to your root folder. In this case the roo
     npm run make
 
 ## Run Electron app at startup
+
 This method relies on running the executable file built in the previous step. 
+
 Edit the desktop autostart file
+
     cd /etc/xdg/autostart/
     -create and edit a file called display.desktop
     sudo touch display.desktop
     sudo nano /etc/xdg/autostart/display.desktop
+
 Add the following lines
+
     [Desktop Entry]
     Name=OrionMonitor
     Exec=/home/voyage/Orion-battery-monitor/out/orion_battery_monitor-linux-arm64/orion_battery_monitor
+
 Reboot the device to test. 
 
 ### (Optional) Autostart without build
@@ -109,6 +116,7 @@ Reboot the device to test.
 
 ## Update the app 
 The app can be updated by simply downloading the git repo again and building the app. No need to update the autostart files.
+
     cd Orion-battery-monitor
     git stash
     git pull 
